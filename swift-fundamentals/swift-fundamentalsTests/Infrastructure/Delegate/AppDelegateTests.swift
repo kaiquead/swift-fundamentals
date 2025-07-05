@@ -10,15 +10,15 @@ import XCTest
 
 final class AppDelegateTests: XCTestCase {
     func testInitializeFromSecretsIsCalledOnLaunch() {
-        let mock = NewsAPIKeyManagerSpy()
+        let spy = NewsAPIKeyManagerSpy()
         let appDelegate = AppDelegate()
-        appDelegate.newsAPIKeyManager = mock
+        appDelegate.newsAPIKeyManager = spy
 
         _ = appDelegate.application(
             UIApplication.shared,
             didFinishLaunchingWithOptions: nil
         )
 
-        XCTAssertTrue(mock.initializeFromSecretsIfNeededCalled, "The method must be called")
+        XCTAssertTrue(spy.initializeFromSecretsIfNeededCalled, "The method must be called")
     }
 }
