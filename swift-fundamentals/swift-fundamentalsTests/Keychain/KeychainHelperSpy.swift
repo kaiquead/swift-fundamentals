@@ -16,9 +16,10 @@ class KeychainHelperSpy: KeychainHelperProtocol {
     
     // MARK: - Methods
 
-    func save(_ value: String, forKey key: String) {
+    func save(_ value: String, forKey key: String) -> Bool {
         saveCalled = true
         store[key] = value
+        return true
     }
 
     func read(forKey key: String) -> String? {
@@ -26,8 +27,9 @@ class KeychainHelperSpy: KeychainHelperProtocol {
         return store[key]
     }
 
-    func delete(forKey key: String) {
+    func delete(forKey key: String) -> Bool {
         deleteCalled = true
         store.removeValue(forKey: key)
+        return true
     }
 }

@@ -10,9 +10,15 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var newsAPIKeyManager: NewsAPIKeyManagerProtocol = NewsAPIKeyManager.shared
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
+        if FirebaseApp.app() == nil {
+            FirebaseApp.configure()
+        }
+        newsAPIKeyManager.initializeFromSecretsIfNeeded()
+
         return true
     }
 

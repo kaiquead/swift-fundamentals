@@ -16,6 +16,7 @@ protocol KeychainHelperProtocol {
 final class KeychainHelper: KeychainHelperProtocol {
 
     private let service = "kaiquedamacena.com.swift-fundamentals.apikey"
+    static let shared = KeychainHelper()
 
     func save(_ value: String, forKey key: String) -> Bool {
         guard let data = value.data(using: .utf8) else { return false }
