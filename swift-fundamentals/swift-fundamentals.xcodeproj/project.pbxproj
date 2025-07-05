@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EE3D75B12E196E1000CCD817 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EE3D75B02E196E1000CCD817 /* FirebaseAnalytics */; };
+		EE3D75B32E196E1000CCD817 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = EE3D75B22E196E1000CCD817 /* FirebaseAuth */; };
+		EE3D75B52E196E1000CCD817 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = EE3D75B42E196E1000CCD817 /* FirebaseDatabase */; };
+		EE3D75B72E196E1000CCD817 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = EE3D75B62E196E1000CCD817 /* FirebaseRemoteConfig */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		EE35137A2E182DAC004BDAC7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +72,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE3D75B52E196E1000CCD817 /* FirebaseDatabase in Frameworks */,
+				EE3D75B12E196E1000CCD817 /* FirebaseAnalytics in Frameworks */,
+				EE3D75B32E196E1000CCD817 /* FirebaseAuth in Frameworks */,
+				EE3D75B72E196E1000CCD817 /* FirebaseRemoteConfig in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +136,10 @@
 			);
 			name = "swift-fundamentals";
 			packageProductDependencies = (
+				EE3D75B02E196E1000CCD817 /* FirebaseAnalytics */,
+				EE3D75B22E196E1000CCD817 /* FirebaseAuth */,
+				EE3D75B42E196E1000CCD817 /* FirebaseDatabase */,
+				EE3D75B62E196E1000CCD817 /* FirebaseRemoteConfig */,
 			);
 			productName = "swift-fundamentals";
 			productReference = EE3513632E182DAC004BDAC7 /* swift-fundamentals.app */;
@@ -208,6 +223,9 @@
 			);
 			mainGroup = EE35135A2E182DAC004BDAC7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EE3513642E182DAC004BDAC7 /* Products */;
 			projectDirPath = "";
@@ -571,6 +589,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.15.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EE3D75B02E196E1000CCD817 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		EE3D75B22E196E1000CCD817 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		EE3D75B42E196E1000CCD817 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		EE3D75B62E196E1000CCD817 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EE35135B2E182DAC004BDAC7 /* Project object */;
 }
