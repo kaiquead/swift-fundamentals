@@ -33,7 +33,7 @@
 		EE35138B2E182DAC004BDAC7 /* Exceptions for "swift-fundamentals" folder in "swift-fundamentals" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Infrastructure/Info.plist,
 			);
 			target = EE3513622E182DAC004BDAC7 /* swift-fundamentals */;
 		};
@@ -291,7 +291,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F824P4SV89;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "swift-fundamentals/Info.plist";
+				INFOPLIST_FILE = "swift-fundamentals/Infrastructure/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -319,7 +319,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F824P4SV89;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "swift-fundamentals/Info.plist";
+				INFOPLIST_FILE = "swift-fundamentals/Infrastructure/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
