@@ -1,5 +1,5 @@
 //
-//  HttpClientEndpointMock.swift
+//  HttpClientRequestConfigurationMock.swift
 //  swift-fundamentalsTests
 //
 //  Created by Kaique Alves on 04/07/25.
@@ -8,7 +8,7 @@
 import Foundation
 @testable import swift_fundamentals
 
-extension HttpClient.Endpoint {
+extension HttpClient.RequestConfiguration {
     
     static func mock(
         urlString: String = "https://example.com",
@@ -16,7 +16,7 @@ extension HttpClient.Endpoint {
         headers: [String : String]? = nil,
         body: Data? = nil,
         queryItems: [URLQueryItem]? = nil
-    ) -> HttpClient.Endpoint {
+    ) -> HttpClient.RequestConfiguration {
         .init(
             urlString: urlString,
             method: method,

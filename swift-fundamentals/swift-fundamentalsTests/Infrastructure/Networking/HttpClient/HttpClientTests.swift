@@ -19,9 +19,9 @@ class HttpClientTests: XCTestCase {
     // MARK: - Tests
     
     func testInvalidURL() {
-        let endpoint = HttpClient.Endpoint.mock(urlString: "invalid")
+        let requestConfiguration = HttpClient.RequestConfiguration.mock(urlString: "invalid")
         
-        httpClient.makeRequest(endpoint: endpoint) { result in
+        httpClient.makeRequest(requestConfiguration: requestConfiguration) { result in
             switch result {
             case .failure(let error):
                 XCTAssertEqual(error, .invalidURL)
@@ -32,9 +32,9 @@ class HttpClientTests: XCTestCase {
     }
     
     func testInvalidURLComponents() {
-        let endpoint = HttpClient.Endpoint.mock(urlString: "https:")
+        let endpoint = HttpClient.RequestConfiguration.mock(urlString: "https:")
         
-        httpClient.makeRequest(endpoint: endpoint) { result in
+        httpClient.makeRequest(requestConfiguration: endpoint) { result in
             switch result {
             case .failure(let error):
                 XCTAssertEqual(error, .invalidURLComponents)
@@ -45,7 +45,7 @@ class HttpClientTests: XCTestCase {
     }
     
     func testSuccessRequest() {
-        let endpoint = HttpClient.Endpoint.mock(urlString: "https://test.com")
+        let requestConfiguration = HttpClient.RequestConfiguration.mock(urlString: "https://test.com")
         let expectation = XCTestExpectation(description: "completion called")
         
         // MARK: - URLProtocolMock configuration
@@ -77,7 +77,7 @@ class HttpClientTests: XCTestCase {
         
         let client = HttpClient.mock(session: mockSession)
         
-        client.makeRequest(endpoint: endpoint) { result in
+        client.makeRequest(requestConfiguration: requestConfiguration) { result in
             switch result {
             case .success(let data):
                 XCTAssertEqual(data, expectedData)
@@ -91,7 +91,7 @@ class HttpClientTests: XCTestCase {
     }
     
     func testErrorRequest() {
-        let endpoint = HttpClient.Endpoint.mock(urlString: "https://jsonplaceholder.typicode.com")
+        let requestConfiguration = HttpClient.RequestConfiguration.mock(urlString: "https://jsonplaceholder.typicode.com")
         let expectation = XCTestExpectation(description: "completion called")
         
         URLProtocolMock.requestHandler = { request in
@@ -117,7 +117,7 @@ class HttpClientTests: XCTestCase {
         
         let client = HttpClient.mock(session: mockSession)
         
-        client.makeRequest(endpoint: endpoint) { result in
+        client.makeRequest(requestConfiguration: requestConfiguration) { result in
             switch result {
             case .failure(let error):
                 XCTAssertEqual(error, HttpClient.RequestError.apiError(statusCode: 400))
@@ -129,5 +129,35 @@ class HttpClientTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 1.0)
+    }
+}
+
+// MARK: - Mock
+
+extension HttpClient {
+    
+    static func mock(session: URLSession = .shared) -> HttpClient {
+        HttpClient(session: session)
+    }
+}
+
+// MARK: - Stub
+
+extension HttpClient {
+    
+    class Stub: HttpClientProtocol {
+        var stubResult: Result<Data, HttpClient.RequestError>
+        var makeRequestCalled = false
+        var requestConfiguration: HttpClient.RequestConfiguration?
+        
+        init(stubResult: Result<Data, HttpClient.RequestError> = .failure(.dataError)) {
+            self.stubResult = stubResult
+        }
+        
+        func makeRequest(requestConfiguration: HttpClient.RequestConfiguration, completion: @escaping (Result<Data, HttpClient.RequestError>) -> Void) {
+            self.makeRequestCalled = true
+            self.requestConfiguration = requestConfiguration
+            completion(stubResult)
+        }
     }
 }

@@ -16,5 +16,6 @@ extension HttpClient {
         case apiError(statusCode: Int)
         case dataError
         case networkError
+        case decodeError
     }
 }
