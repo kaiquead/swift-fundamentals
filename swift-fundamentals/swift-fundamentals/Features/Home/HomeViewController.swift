@@ -27,11 +27,6 @@ class HomeViewController: UIViewController {
         self.interactor = interactor
         self.router = router
         super.init(nibName: nil, bundle: nil)
-        
-        view.backgroundColor = .red
-        DispatchQueue.main.async {
-            self.view.backgroundColor = .green
-        }
     }
     
     override func viewDidLoad() {
