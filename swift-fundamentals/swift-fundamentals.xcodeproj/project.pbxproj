@@ -11,6 +11,7 @@
 		EE3D75B32E196E1000CCD817 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = EE3D75B22E196E1000CCD817 /* FirebaseAuth */; };
 		EE3D75B52E196E1000CCD817 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = EE3D75B42E196E1000CCD817 /* FirebaseDatabase */; };
 		EE3D75B72E196E1000CCD817 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = EE3D75B62E196E1000CCD817 /* FirebaseRemoteConfig */; };
+		EE54C1412E1D432D006A6A7C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EE54C1402E1D432D006A6A7C /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 				EE3D75B12E196E1000CCD817 /* FirebaseAnalytics in Frameworks */,
 				EE3D75B32E196E1000CCD817 /* FirebaseAuth in Frameworks */,
 				EE3D75B72E196E1000CCD817 /* FirebaseRemoteConfig in Frameworks */,
+				EE54C1412E1D432D006A6A7C /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +142,7 @@
 				EE3D75B22E196E1000CCD817 /* FirebaseAuth */,
 				EE3D75B42E196E1000CCD817 /* FirebaseDatabase */,
 				EE3D75B62E196E1000CCD817 /* FirebaseRemoteConfig */,
+				EE54C1402E1D432D006A6A7C /* SnapKit */,
 			);
 			productName = "swift-fundamentals";
 			productReference = EE3513632E182DAC004BDAC7 /* swift-fundamentals.app */;
@@ -227,6 +230,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				EE54C13F2E1D432D006A6A7C /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EE3513642E182DAC004BDAC7 /* Products */;
@@ -603,6 +607,14 @@
 				minimumVersion = 11.15.0;
 			};
 		};
+		EE54C13F2E1D432D006A6A7C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -625,6 +637,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
+		};
+		EE54C1402E1D432D006A6A7C /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE54C13F2E1D432D006A6A7C /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

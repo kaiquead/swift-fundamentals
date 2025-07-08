@@ -11,7 +11,7 @@ import Foundation
 extension HomeNews {
     
     static func mock(status: String = "ok", articles: [Article] = []) -> HomeNews {
-        HomeNews(status: "ok", articles: [.mock()])
+        HomeNews(status: "ok", totalResults: 10, articles: [.mock()])
     }
 }
 

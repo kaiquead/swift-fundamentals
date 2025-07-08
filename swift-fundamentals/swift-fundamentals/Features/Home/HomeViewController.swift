@@ -21,10 +21,23 @@ class HomeViewController: UIViewController {
     // MARK: - Initialization
     
     let interactor: HomeInteractorProcol
+    let router: HomeRouterProtocol
     
-    init(interactor: HomeInteractorProcol) {
+    init(interactor: HomeInteractorProcol, router: HomeRouterProtocol) {
         self.interactor = interactor
-        super.init()
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
+        
+        view.backgroundColor = .red
+        DispatchQueue.main.async {
+            self.view.backgroundColor = .green
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        print("")
     }
     
     required init?(coder: NSCoder) {
@@ -34,8 +47,15 @@ class HomeViewController: UIViewController {
 
 // MARK: - Inputs
 
-extension HomeViewController: HomeViewControllerInputProtocol {
+extension HomeViewController: HomeViewControllerInputProtocol, HomeViewDelegate {
     
+    func searchButtonTap(text: String) {
+        
+    }
+    
+    func loadMoreNewsFromInfinityScroll() {
+        
+    }
 }
 
 // MARK: - Outputs
