@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  swift-fundamentals
+
+  Created by Kaique Alves on 07/07/25.
+  
+*/
+
+// MARK: - Home
+
+"homeTitle" = "Notícias Diárias";
+"searchTitle" = "Procurar";
+"newsTitle" = "Notícias";
+"helloLabel" = "Olá, %@"
