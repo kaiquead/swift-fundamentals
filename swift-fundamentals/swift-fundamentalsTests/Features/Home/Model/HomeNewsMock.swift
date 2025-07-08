@@ -1,5 +1,5 @@
 //
-//  HomeModelTests.swift
+//  HomeNewsMock.swift
 //  swift-fundamentalsTests
 //
 //  Created by Kaique Alves on 07/07/25.

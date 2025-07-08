@@ -14,19 +14,19 @@ class HomeWorkerTests: XCTestCase {
     // MARK: - Methods
     
     func testPageAndQueryItemsInRequest() {
-        let httpClient = HttpClient.Stub()
+        let httpClientStub = HttpClient.Stub()
         let newsApiKeyManagerSpy = NewsAPIKeyManagerSpy()
         
-        let worker = HomeWorker.mock(httpClient: httpClient, newsAPIKeyManagerProtocol: newsApiKeyManagerSpy)
+        let worker = HomeWorker.mock(httpClient: httpClientStub, newsAPIKeyManagerProtocol: newsApiKeyManagerSpy)
         let page = 1
         
         worker.makeInitialNewsRequest(page: page) { _ in
-            XCTAssertTrue(httpClient.makeRequestCalled)
-            XCTAssertTrue(((httpClient.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "q", value: "noticias")})) ?? false))
-            XCTAssertTrue(((httpClient.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "language", value: "pt")})) ?? false))
-            XCTAssertTrue(((httpClient.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "page", value: String(page))})) ?? false))
-            XCTAssertTrue(((httpClient.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "pageSize", value: "8")})) ?? false))
-            XCTAssertTrue(((httpClient.requestConfiguration?.queryItems?.contains(where: { $0.name == "apiKey" })) ?? false))
+            XCTAssertTrue(httpClientStub.makeRequestCalled)
+            XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "q", value: "noticias")})) ?? false))
+            XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "language", value: "pt")})) ?? false))
+            XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "page", value: String(page))})) ?? false))
+            XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "pageSize", value: "8")})) ?? false))
+            XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0.name == "apiKey" })) ?? false))
             
             XCTAssertTrue(newsApiKeyManagerSpy.getAPIKeyCalled)
         }
@@ -35,9 +35,9 @@ class HomeWorkerTests: XCTestCase {
     func testMakeInitialNewsRequestWithSuccessInHttpAndFailureInDecode() {
         let genericData = Data()
         let httpClientStubResult: Result<Data, HttpClient.RequestError> = .success(genericData)
-        let httpClient = HttpClient.Stub(stubResult: httpClientStubResult)
+        let httpClientStub = HttpClient.Stub(stubResult: httpClientStubResult)
         
-        let worker = HomeWorker.mock(httpClient: httpClient)
+        let worker = HomeWorker.mock(httpClient: httpClientStub)
         let page = 1
         
         worker.makeInitialNewsRequest(page: page) { result in
@@ -57,9 +57,9 @@ class HomeWorkerTests: XCTestCase {
         }
         
         let httpClientStubResult: Result<Data, HttpClient.RequestError> = .success(httpClientSuccessData)
-        let httpClient = HttpClient.Stub(stubResult: httpClientStubResult)
+        let httpClientStub = HttpClient.Stub(stubResult: httpClientStubResult)
         
-        let worker = HomeWorker.mock(httpClient: httpClient)
+        let worker = HomeWorker.mock(httpClient: httpClientStub)
         let page = 1
         
         worker.makeInitialNewsRequest(page: page) { result in
@@ -93,7 +93,7 @@ class HomeWorkerTests: XCTestCase {
 extension HomeWorker {
     
     static func mock(
-        httpClient: HttpClientProtocol = HttpClient.mock(),
+        httpClient: HttpClientProtocol = HttpClient.Stub(),
         newsAPIKeyManagerProtocol: NewsAPIKeyManagerProtocol = NewsAPIKeyManagerSpy()
     ) -> HomeWorker {
         HomeWorker(httpClient: httpClient, newsApiKeyManager: newsAPIKeyManagerProtocol)

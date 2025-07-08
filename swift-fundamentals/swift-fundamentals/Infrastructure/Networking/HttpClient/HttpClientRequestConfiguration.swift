@@ -1,5 +1,5 @@
 //
-//  HttpClientEndpoint.swift
+//  HttpClientRequestConfiguration.swift
 //  swift-fundamentals
 //
 //  Created by Kaique Alves on 04/07/25.

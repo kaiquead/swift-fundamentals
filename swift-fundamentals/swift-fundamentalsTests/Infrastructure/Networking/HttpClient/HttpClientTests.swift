@@ -32,13 +32,13 @@ class HttpClientTests: XCTestCase {
     }
     
     func testInvalidURLComponents() {
-        let endpoint = HttpClient.RequestConfiguration.mock(urlString: "https:")
+        let requestConfiguration = HttpClient.RequestConfiguration.mock(urlString: "https:")
         
-        httpClient.makeRequest(requestConfiguration: endpoint) { result in
+        httpClient.makeRequest(requestConfiguration: requestConfiguration) { result in
             switch result {
             case .failure(let error):
                 XCTAssertEqual(error, .invalidURLComponents)
-            default:
+            case .success:
                 XCTFail("Result must be error because is invalid url components")
             }
         }
@@ -136,8 +136,16 @@ class HttpClientTests: XCTestCase {
 
 extension HttpClient {
     
-    static func mock(session: URLSession = .shared) -> HttpClient {
-        HttpClient(session: session)
+    // MARK: - This mock exclusively have this structure to don`t be risk to use a real URLSession. Was necessary because I can`t have init() in URLSession subclasses, instead I had to use URLProtocol and inject in configuration to capture a fake call.
+    static func mock(session: URLSession? = nil) -> HttpClient {
+        guard let session = session else {
+            let configuration = URLSessionConfiguration.ephemeral
+            configuration.protocolClasses = [URLProtocolMock.self]
+            let mockSession = URLSession(configuration: configuration)
+            return HttpClient(session: mockSession)
+        }
+        
+        return HttpClient(session: session)
     }
 }
 

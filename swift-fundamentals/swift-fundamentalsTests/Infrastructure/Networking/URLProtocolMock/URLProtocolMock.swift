@@ -20,7 +20,7 @@ class URLProtocolMock: URLProtocol {
 
     override func startLoading() {
         guard let handler = URLProtocolMock.requestHandler else {
-            fatalError("Handler não configurado")
+            fatalError("Handler not configured")
         }
 
         do {
