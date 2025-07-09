@@ -43,6 +43,7 @@ jobs:
       - name: Run tests (unit + snapshot)
         run: |
           set -o pipefail
+          cd swift-fundamentals
           xcodebuild test \
             -project swift-fundamentals.xcodeproj \
             -scheme swift-fundamentals \
