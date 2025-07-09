@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE1974D22E1DFCE7009A1412 /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = EE1974D12E1DFCE7009A1412 /* InlineSnapshotTesting */; };
+		EE1974D42E1DFCE7009A1412 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = EE1974D32E1DFCE7009A1412 /* SnapshotTesting */; };
+		EE1974D62E1DFCE7009A1412 /* SnapshotTestingCustomDump in Frameworks */ = {isa = PBXBuildFile; productRef = EE1974D52E1DFCE7009A1412 /* SnapshotTestingCustomDump */; };
 		EE3D75B12E196E1000CCD817 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EE3D75B02E196E1000CCD817 /* FirebaseAnalytics */; };
 		EE3D75B32E196E1000CCD817 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = EE3D75B22E196E1000CCD817 /* FirebaseAuth */; };
 		EE3D75B52E196E1000CCD817 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = EE3D75B42E196E1000CCD817 /* FirebaseDatabase */; };
@@ -85,6 +88,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE1974D62E1DFCE7009A1412 /* SnapshotTestingCustomDump in Frameworks */,
+				EE1974D22E1DFCE7009A1412 /* InlineSnapshotTesting in Frameworks */,
+				EE1974D42E1DFCE7009A1412 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +172,9 @@
 			);
 			name = "swift-fundamentalsTests";
 			packageProductDependencies = (
+				EE1974D12E1DFCE7009A1412 /* InlineSnapshotTesting */,
+				EE1974D32E1DFCE7009A1412 /* SnapshotTesting */,
+				EE1974D52E1DFCE7009A1412 /* SnapshotTestingCustomDump */,
 			);
 			productName = "swift-fundamentalsTests";
 			productReference = EE3513792E182DAC004BDAC7 /* swift-fundamentalsTests.xctest */;
@@ -231,6 +240,7 @@
 			packageReferences = (
 				EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				EE54C13F2E1D432D006A6A7C /* XCRemoteSwiftPackageReference "SnapKit" */,
+				EE1974D02E1DFCE7009A1412 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EE3513642E182DAC004BDAC7 /* Products */;
@@ -597,6 +607,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		EE1974D02E1DFCE7009A1412 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = exactVersion;
+				version = 1.18.4;
+			};
+		};
 		EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -616,6 +634,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		EE1974D12E1DFCE7009A1412 /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE1974D02E1DFCE7009A1412 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
+		};
+		EE1974D32E1DFCE7009A1412 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE1974D02E1DFCE7009A1412 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		EE1974D52E1DFCE7009A1412 /* SnapshotTestingCustomDump */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE1974D02E1DFCE7009A1412 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTestingCustomDump;
+		};
 		EE3D75B02E196E1000CCD817 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EE3D75AF2E196E1000CCD817 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
