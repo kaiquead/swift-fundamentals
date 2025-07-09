@@ -35,7 +35,6 @@ jobs:
         if: success()
         run: |
           mkdir -p coverage
-          xcrun llvm-cov export \
-            -format="lcov" \
-            .build/debug/swift-fundamentalsTests.xctest/Contents/MacOS/swift-fundamentalsTests \
-            -instr-profile .build/debug/codecov/default.profdata > coverage/lcov.info
+          xcresult_path=$(find /Users/runner/Library/Developer/Xcode/DerivedData -name "*.xcresult" | tail -n1)
+          xcrun xccov view --report --json "$xcresult_path" > coverage/codecov.json
+
