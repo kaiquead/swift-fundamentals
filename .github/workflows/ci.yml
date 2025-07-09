@@ -23,17 +23,19 @@ jobs:
       - name: Set up Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
+      - name: Install xcpretty (optional but recommended)
+        run: gem install xcpretty
+
       - name: Resolve SwiftPM dependencies
         run: |
           xcodebuild -resolvePackageDependencies \
-            -project swift-fundamentals.xcodeproj
+            -project swift-fundamentals/swift-fundamentals.xcodeproj
 
       - name: Build project
         run: |
           set -o pipefail
-          cd swift-fundamentals
           xcodebuild clean build \
-            -project swift-fundamentals.xcodeproj \
+            -project swift-fundamentals/swift-fundamentals.xcodeproj \
             -scheme swift-fundamentals \
             -destination "${destination}" \
             CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
@@ -43,9 +45,8 @@ jobs:
       - name: Run tests (unit + snapshot)
         run: |
           set -o pipefail
-          cd swift-fundamentals
           xcodebuild test \
-            -project swift-fundamentals.xcodeproj \
+            -project swift-fundamentals/swift-fundamentals.xcodeproj \
             -scheme swift-fundamentals \
             -destination "${destination}" \
             -enableCodeCoverage YES \
@@ -53,6 +54,12 @@ jobs:
             -quiet | xcpretty
         env: 
           destination: ${{ matrix.destination }}
+
+      - name: Export coverage report (optional)
+        if: success()
+        run: |
+          mkdir -p coverage
+          xcrun xccov view --report --json build/ResultBundle.xcresult > coverage/codecov.json
 
       - name: List generated snapshots (optional debug)
         if: always()
