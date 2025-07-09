@@ -44,8 +44,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        errorTest
-        
         DispatchQueue.main.async {
             guard let view = self.view as? HomeView else { return }
             view.delegate = self
