@@ -24,6 +24,9 @@ jobs:
       - name: Confirm Xcode version
         run: xcodebuild -version
 
+      - name: List available iOS simulators
+        run: xcrun simctl list devices
+
       - name: Check conflicts in project
         run: |
           set -o pipefail
@@ -56,4 +59,3 @@ jobs:
           set -o pipefail
           mkdir -p coverage
           xcrun xccov view --report --json build/ResultBundle.xcresult > coverage/codecov.json
-
