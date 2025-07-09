@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         let navigationController = UINavigationController()
-        let viewController = HomeFactory.makeHomeViewController(navigationController: navigationController)
+        let viewController = LoginFactory.makeLoginViewController(navigationController: navigationController)//HomeFactory.makeHomeViewController(navigationController: navigationController)
         
         navigationController.setViewControllers([viewController], animated: true)
         window.rootViewController = navigationController

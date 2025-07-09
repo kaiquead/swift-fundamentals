@@ -33,12 +33,9 @@ class HomeRouter: HomeRouterProtocol {
     // MARK: - Methods
     
     func showApiError() {
-        let okAction = UIAlertAction(title: StringLocalizer.apiErrorOk, style: .default) { [weak self] _ in
+        let alertController = ErrorAlertController.makeErrorView { [weak self] in
             self?.delegate?.okAction()
         }
-        
-        let alertController = UIAlertController(title: StringLocalizer.apiErrorTitle, message: StringLocalizer.apiErrorDescription, preferredStyle: .alert)
-        alertController.addAction(okAction)
         
         DispatchQueue.main.async {
             self.navigationController?.present(alertController, animated: true, completion: nil)

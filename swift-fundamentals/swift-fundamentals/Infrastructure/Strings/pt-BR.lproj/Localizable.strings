@@ -6,6 +6,13 @@
   
 */
 
+// MARK: - Login
+
+"loginTitle" = "Notícias Diárias";
+"emailPlaceholder" = "Digite seu e-mail";
+"passwordPlaceholder" = "Digite sua senha";
+"loginButtonTitle" = "Entrar";
+
 // MARK: - Home
 
 "homeTitle" = "Notícias Diárias";

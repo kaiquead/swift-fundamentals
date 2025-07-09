@@ -9,6 +9,24 @@ import Foundation
 
 enum StringLocalizer {
     
+    // MARK: - Login
+    
+    static var loginTitle: String {
+        self.localizeString("loginTitle")
+    }
+    
+    static var emailPlaceholder: String {
+        self.localizeString("emailPlaceholder")
+    }
+    
+    static var passwordPlaceholder: String {
+        self.localizeString("passwordPlaceholder")
+    }
+    
+    static var loginButtonTitle: String {
+        self.localizeString("loginButtonTitle")
+    }
+    
     // MARK: - Home
     
     static var homeTitle: String {
