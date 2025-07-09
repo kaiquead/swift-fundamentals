@@ -29,12 +29,5 @@ jobs:
             -quiet | xcpretty
 
       - name: List snapshots (debug)
-        run: ls -R /Users/runner/work/**/__Snapshots__ || echo "Nenhum snapshot gerado"
-
-      - name: Coverage report
-        if: success()
-        run: |
-          mkdir -p coverage
-          xcresult_path=$(find /Users/runner/Library/Developer/Xcode/DerivedData -name "*.xcresult" | tail -n1)
-          xcrun xccov view --report --json "$xcresult_path" > coverage/codecov.json
+        run: ls -R /Users/runner/work/**/__Snapshots__ || echo "No snapshots generated"
 
