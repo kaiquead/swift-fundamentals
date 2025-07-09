@@ -44,11 +44,15 @@ jobs:
           SIMULATOR_ID=$(xcrun simctl list devices available | grep -m1 "iPhone 15 Pro" | grep -oE '\([A-F0-9-]+\)' | tr -d '()')
 
           if [ -z "$SIMULATOR_ID" ]; then
-            echo "❌ Nenhum simulador 'iPhone 15 Pro' disponível"
+            echo "❌ No simulators 'iPhone 15 Pro' available"
             exit 1
           fi
 
           echo "✅ Using simulator UDID: $SIMULATOR_ID"
+
+          # ✅ Boot and wait simulator
+          xcrun simctl boot "$SIMULATOR_ID" || true
+          xcrun simctl bootstatus "$SIMULATOR_ID" -b
 
           xcodebuild test \
             -project swift-fundamentals.xcodeproj \
@@ -59,14 +63,8 @@ jobs:
             -resultBundlePath build/ResultBundle \
             -quiet | xcpretty
 
+
       - name: List snapshots (debug)
         run: |
           set -o pipefail
           find /Users/runner/work/ -type d -name "__Snapshots__" -exec ls -R {} \; || echo "No snapshots generated"
-
-      - name: Coverage report (JSON)
-        if: success()
-        run: |
-          set -o pipefail
-          mkdir -p coverage
-          xcrun xccov view --report --json build/ResultBundle.xcresult > coverage/codecov.json
