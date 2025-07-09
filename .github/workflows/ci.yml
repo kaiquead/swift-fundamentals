@@ -10,20 +10,14 @@ on:
 jobs:
   build-and-test:
     name: Build and Test iOS App
-    runs-on: macos-13
+    runs-on: macos-13  # Ou macos-14 para Xcode mais novo
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Select Xcode Version
-        run: |
-          sudo xcode-select -s /Applications/Xcode_15.3.app
-          xcodebuild -version
-
-      - name: Navigate to Project Directory
-        working-directory: swift-fundamentals/swift-fundamentals
-        run: echo "Entered project directory"
+      - name: Show Xcode Version
+        run: xcodebuild -version
 
       - name: Resolve Swift Packages
         working-directory: swift-fundamentals/swift-fundamentals
