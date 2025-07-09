@@ -18,7 +18,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build the project
+      - name: 🔍 Debug: verificar estrutura de pastas
+        run: |
+          echo "Diretório atual:"
+          pwd
+          echo "Conteúdo da raiz:"
+          ls -la
+          echo "Recursivo até encontrar .xcodeproj:"
+          find . -name "*.xcodeproj"
+
+      - name: ✅ Build do projeto
         working-directory: swift-fundamentals/swift-fundamentals
         run: |
           xcodebuild \
