@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if FirebaseApp.app() == nil {
             FirebaseApp.configure()
         }
+        
         newsAPIKeyManager.initializeFromSecretsIfNeeded()
 
         return true

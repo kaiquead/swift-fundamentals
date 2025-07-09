@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import UIKit
 
 protocol HomeFactoryProtocol {
-    static func makeHomeViewController(navigationController: UINavigationControllerProtocol?) -> HomeViewController
+    static func makeHomeViewController(navigationController: UINavigationController?) -> HomeViewController
 }
 
 enum HomeFactory: HomeFactoryProtocol {
-    static func makeHomeViewController(navigationController: UINavigationControllerProtocol?) -> HomeViewController {
+    static func makeHomeViewController(navigationController: UINavigationController?) -> HomeViewController {
         
         let worker = HomeWorker()
         let presenter = HomePresenter()

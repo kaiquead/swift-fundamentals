@@ -25,7 +25,7 @@ class HomeWorkerTests: XCTestCase {
             XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "q", value: "noticias")})) ?? false))
             XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "language", value: "pt")})) ?? false))
             XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "page", value: String(page))})) ?? false))
-            XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "pageSize", value: "8")})) ?? false))
+            XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0 == URLQueryItem(name: "pageSize", value: "30")})) ?? false))
             XCTAssertTrue(((httpClientStub.requestConfiguration?.queryItems?.contains(where: { $0.name == "apiKey" })) ?? false))
             
             XCTAssertTrue(newsApiKeyManagerSpy.getAPIKeyCalled)

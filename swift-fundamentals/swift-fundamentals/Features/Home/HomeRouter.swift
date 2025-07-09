@@ -24,9 +24,9 @@ class HomeRouter: HomeRouterProtocol {
     
     // MARK: - Initialization
     
-    let navigationController: UINavigationControllerProtocol?
+    let navigationController: UINavigationController?
     
-    init(navigationController: UINavigationControllerProtocol?) {
+    init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
     }
     

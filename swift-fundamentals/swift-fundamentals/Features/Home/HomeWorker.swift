@@ -34,7 +34,7 @@ class HomeWorker: HomeWorkerProtocol {
             URLQueryItem(name: "q", value: "noticias"),
             URLQueryItem(name: "language", value: "pt"),
             URLQueryItem(name: "page", value: String(page)),
-            URLQueryItem(name: "pageSize", value: "8"),
+            URLQueryItem(name: "pageSize", value: "30"),
             URLQueryItem(name: "apiKey", value: newsApiKeyManager.getAPIKey())
         ]
         
