@@ -35,25 +35,34 @@ jobs:
             exit 1
           } || echo "✅ No conflicts detected in .xcodeproj"
 
-      - name: Build and tests with xcodebuild including SnapshotTests
+      - name: Build and test with custom simulator
         run: |
           set -o pipefail
           cd swift-fundamentals
 
-          # ✅ Automatic search in UDID of first iPhone 15 Pro
-          SIMULATOR_ID=$(xcrun simctl list devices available | grep -m1 "iPhone 15 Pro" | grep -oE '\([A-F0-9-]+\)' | tr -d '()')
-
-          if [ -z "$SIMULATOR_ID" ]; then
-            echo "❌ No simulators 'iPhone 15 Pro' available"
+          # Escolhe um runtime de iOS válido instalado
+          RUNTIME=$(xcrun simctl list runtimes | grep "iOS 17.2" | grep -oE 'com.apple.CoreSimulator.SimRuntime.iOS-[^ ]+')
+          
+          if [ -z "$RUNTIME" ]; then
+            echo "❌ Runtime iOS 17.2 não encontrado no runner"
             exit 1
           fi
 
-          echo "✅ Using simulator UDID: $SIMULATOR_ID"
+          echo "✅ Usando runtime: $RUNTIME"
 
-          # ✅ Boot and wait simulator
-          xcrun simctl boot "$SIMULATOR_ID" || true
+          # Cria um novo simulador
+          SIMULATOR_ID=$(xcrun simctl create "CI iPhone 15 Pro" "iPhone 15 Pro" "$RUNTIME")
+
+          echo "✅ Simulador criado com UDID: $SIMULATOR_ID"
+
+          # Inicializa e aguarda
+          xcrun simctl boot "$SIMULATOR_ID"
           xcrun simctl bootstatus "$SIMULATOR_ID" -b
 
+          # Espera propagação no Xcode
+          sleep 10
+
+          # Executa testes
           xcodebuild test \
             -project swift-fundamentals.xcodeproj \
             -scheme swift-fundamentals \
@@ -62,6 +71,10 @@ jobs:
             -enableCodeCoverage YES \
             -resultBundlePath build/ResultBundle \
             -quiet | xcpretty
+
+          # Deleta simulador após uso para manter ambiente limpo
+          xcrun simctl delete "$SIMULATOR_ID"
+
 
 
       - name: List snapshots (debug)

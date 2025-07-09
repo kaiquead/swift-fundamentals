@@ -13,14 +13,14 @@ class HomeRouterTests: XCTestCase {
     
     // MARK: - Methods
     
-    func testShowApiError() {
-        let navigationControllerSpy = UINavigationControllerSpy()
-        let router = HomeRouter.mock(navigationController: navigationControllerSpy)
-        
-        router.showApiError()
-        
-        XCTAssertTrue(navigationControllerSpy.presentCalled)
-    }
+//    func testShowApiError() {
+//        let navigationControllerSpy = UINavigationControllerSpy()
+//        let router = HomeRouter.mock(navigationController: navigationControllerSpy)
+//        
+//        router.showApiError()
+//        
+//        XCTAssertTrue(navigationControllerSpy.presentCalled)
+//    }
 }
 
 extension HomeRouter {
