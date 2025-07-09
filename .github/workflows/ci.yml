@@ -19,6 +19,7 @@ jobs:
 
       - name: Build and tests with xcodebuild including SnapshotTests
         run: |
+          set -o pipefail
           cd swift-fundamentals/swift-fundamentals
           xcodebuild test \
             -project swift-fundamentals.xcodeproj \
@@ -29,5 +30,6 @@ jobs:
             -quiet | xcpretty
 
       - name: List snapshots (debug)
-        run: ls -R /Users/runner/work/**/__Snapshots__ || echo "No snapshots generated"
-
+        run: |
+          set -o pipefail
+          ls -R /Users/runner/work/**/__Snapshots__ || echo "No snapshots generated"
