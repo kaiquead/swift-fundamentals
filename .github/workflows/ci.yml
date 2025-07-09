@@ -11,73 +11,67 @@ jobs:
     runs-on: macos-14
 
     steps:
-      - name: Project Checkout
+      - name: Checkout do projeto
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Chose Xcode 16.2
+      - name: Selecionar Xcode 16.3
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '16.2'
+          xcode-version: '16.3'
 
-      - name: Confirm Xcode version
+      - name: Confirmar versão do Xcode
         run: xcodebuild -version
 
-      - name: List available iOS simulators
-        run: xcrun simctl list devices
-
-      - name: Check conflicts in project
+      - name: Resolver dependências via Swift Package Manager
         run: |
           set -o pipefail
-          grep -r "<<<<<<<" swift-fundamentals/swift-fundamentals.xcodeproj && {
-            echo "❌ Merge Conflicts detected in .xcodeproj"
-            exit 1
-          } || echo "✅ No conflicts detected in .xcodeproj"
+          xcodebuild -resolvePackageDependencies -project swift-fundamentals/swift-fundamentals.xcodeproj
 
-      - name: Build and test with custom simulator
+      - name: Criar simulador temporário
+        id: create-simulator
         run: |
           set -o pipefail
-          cd swift-fundamentals
+          RUNTIME=$(xcrun simctl list runtimes | grep -m1 "iOS 17" | grep -oE 'com.apple.CoreSimulator.SimRuntime.iOS[^ ]+')
 
-          # Escolhe um runtime de iOS válido instalado
-          RUNTIME=$(xcrun simctl list runtimes | grep "iOS 17.2" | grep -oE 'com.apple.CoreSimulator.SimRuntime.iOS-[^ ]+')
-          
           if [ -z "$RUNTIME" ]; then
-            echo "❌ Runtime iOS 17.2 não encontrado no runner"
+            echo "❌ Runtime iOS não encontrado"
             exit 1
           fi
 
-          echo "✅ Usando runtime: $RUNTIME"
+          SIM_ID=$(xcrun simctl create "CI iPhone 15" "iPhone 15" "$RUNTIME")
+          echo "simulator_id=$SIM_ID" >> $GITHUB_OUTPUT
 
-          # Cria um novo simulador
-          SIMULATOR_ID=$(xcrun simctl create "CI iPhone 15 Pro" "iPhone 15 Pro" "$RUNTIME")
+          xcrun simctl boot "$SIM_ID"
+          xcrun simctl bootstatus "$SIM_ID" -b
 
-          echo "✅ Simulador criado com UDID: $SIMULATOR_ID"
-
-          # Inicializa e aguarda
-          xcrun simctl boot "$SIMULATOR_ID"
-          xcrun simctl bootstatus "$SIMULATOR_ID" -b
-
-          # Espera propagação no Xcode
-          sleep 10
-
-          # Executa testes
+      - name: Executar testes (unitários + snapshot)
+        run: |
+          set -o pipefail
+          cd swift-fundamentals
           xcodebuild test \
             -project swift-fundamentals.xcodeproj \
             -scheme swift-fundamentals \
             -sdk iphonesimulator \
-            -destination "id=$SIMULATOR_ID" \
+            -destination "id=${{ steps.create-simulator.outputs.simulator_id }}" \
             -enableCodeCoverage YES \
             -resultBundlePath build/ResultBundle \
             -quiet | xcpretty
 
-          # Deleta simulador após uso para manter ambiente limpo
-          xcrun simctl delete "$SIMULATOR_ID"
-
-
-
-      - name: List snapshots (debug)
+      - name: Verificar snapshots gerados (debug)
         run: |
           set -o pipefail
-          find /Users/runner/work/ -type d -name "__Snapshots__" -exec ls -R {} \; || echo "No snapshots generated"
+          find /Users/runner/work/ -type d -name "__Snapshots__" -exec ls -R {} \; || echo "Nenhum snapshot encontrado"
+
+      - name: Exportar cobertura de testes
+        if: success()
+        run: |
+          mkdir -p coverage
+          xcrun xccov view --report --json swift-fundamentals/build/ResultBundle.xcresult > coverage/codecov.json
+
+      - name: Apagar simulador
+        if: always()
+        run: |
+          xcrun simctl shutdown "${{ steps.create-simulator.outputs.simulator_id }}"
+          xcrun simctl delete "${{ steps.create-simulator.outputs.simulator_id }}"
