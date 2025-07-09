@@ -27,6 +27,19 @@ enum StringLocalizer {
         self.localizeString("helloLabel")
     }
     
+    static var apiErrorTitle: String {
+        self.localizeString("apiErrorTitle")
+    }
+    
+    static var apiErrorDescription: String {
+        self.localizeString("apiErrorDescription")
+    }
+    
+    static var apiErrorOk: String {
+        self.localizeString("apiErrorOk")
+    }
+    
+    // MARK: - Localizer
     
     static func localizeString(_ key: String) -> String {
         return String(format: NSLocalizedString(key, comment: ""))

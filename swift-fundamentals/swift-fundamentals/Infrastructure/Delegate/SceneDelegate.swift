@@ -17,14 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         let navigationController = UINavigationController()
-        
-        let presenter = HomePresenter()
-        let worker = HomeWorker()
-        let interactor = HomeInteractor(presenter: presenter, worker: worker)
-        let router = HomeRouter(navigationController: navigationController)
-        let viewController = HomeViewController(interactor: interactor, router: router)
-        presenter.homeViewController = viewController
-        viewController.view = HomeView()
+        let viewController = HomeFactory.makeHomeViewController(navigationController: navigationController)
         
         navigationController.setViewControllers([viewController], animated: true)
         window.rootViewController = navigationController

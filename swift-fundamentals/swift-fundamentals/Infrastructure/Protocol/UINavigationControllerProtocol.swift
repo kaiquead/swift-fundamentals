@@ -12,4 +12,5 @@ extension UINavigationController: UINavigationControllerProtocol { }
 protocol UINavigationControllerProtocol {
     func pushViewController(_ viewController: UIViewController, animated: Bool)
     func popViewController(animated: Bool) -> UIViewController?
+    func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
 }

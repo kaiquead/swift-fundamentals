@@ -41,6 +41,8 @@ class HomeWorkerTests: XCTestCase {
         let page = 1
         
         worker.makeInitialNewsRequest(page: page) { result in
+            XCTAssertTrue(httpClientStub.makeRequestCalled)
+            
             switch result {
             case .failure(let error):
                 XCTAssertTrue(error == .decodeError)
@@ -63,6 +65,8 @@ class HomeWorkerTests: XCTestCase {
         let page = 1
         
         worker.makeInitialNewsRequest(page: page) { result in
+            XCTAssertTrue(httpClientStub.makeRequestCalled)
+            
             switch result {
             case .success:
                 XCTAssert(true)
@@ -74,12 +78,14 @@ class HomeWorkerTests: XCTestCase {
     
     func testMakeInitialNewsRequestFailInHttp() {
         let httpClientStubResult: Result<Data, HttpClient.RequestError> = .failure(.apiError(statusCode: 404))
-        let httpClient = HttpClient.Stub(stubResult: httpClientStubResult)
+        let httpClientStub = HttpClient.Stub(stubResult: httpClientStubResult)
         
-        let worker = HomeWorker.mock(httpClient: httpClient)
+        let worker = HomeWorker.mock(httpClient: httpClientStub)
         let page = 1
         
         worker.makeInitialNewsRequest(page: page) { result in
+            XCTAssertTrue(httpClientStub.makeRequestCalled)
+            
             switch result {
             case .failure(let error):
                 XCTAssertTrue(error == .apiError(statusCode: 404))

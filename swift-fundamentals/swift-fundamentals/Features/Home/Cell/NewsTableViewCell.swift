@@ -84,6 +84,7 @@ class NewsTableViewCell: UITableViewCell {
     func prepare(with article: HomeNews.Article) {
         titleLabel.text = article.title
         descriptionLabel.text = article.description
+        dateLabel.text = FormatDate.format(dateString: article.publishedAt)
         guard let urlToImage = article.urlToImage else { return }
         loadImage(from: urlToImage, in: newsImageView)
     }

@@ -8,10 +8,14 @@
 import Foundation
 
 protocol HomeInteractorProcol {
-    
+    func loadHomeNews(isFirstPage: Bool)
 }
 
 class HomeInteractor: HomeInteractorProcol {
+    
+    // MARK: - Private properties
+    
+    private var page = 1
     
     // MARK: - Initialization
     
@@ -23,5 +27,21 @@ class HomeInteractor: HomeInteractorProcol {
         self.worker = worker
     }
     
-    
+    func loadHomeNews(isFirstPage: Bool) {
+        if !isFirstPage {
+            page += 1
+        }
+        
+        worker.makeInitialNewsRequest(page: page) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let news):
+                self.presenter.loadNewsOnScreen(news: news)
+                
+            case .failure:
+                self.presenter.showApiError()
+            }
+        }
+    }
 }

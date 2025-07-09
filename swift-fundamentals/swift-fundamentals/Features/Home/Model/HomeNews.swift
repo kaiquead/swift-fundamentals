@@ -7,15 +7,21 @@
 
 import Foundation
 
-struct HomeNews: Codable {
+struct HomeNews: Codable, Equatable {
     let status: String
     let totalResults: Int
     let articles: [Article]
+    
+    static func == (lhs: HomeNews, rhs: HomeNews) -> Bool {
+        return lhs.status == rhs.status &&
+               lhs.totalResults == rhs.totalResults &&
+               lhs.articles == rhs.articles
+    }
 }
 
 extension HomeNews {
     
-    struct Article: Codable {
+    struct Article: Codable, Equatable {
         let author: String?
         let title: String?
         let description: String?

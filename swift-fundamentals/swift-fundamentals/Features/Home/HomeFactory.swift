@@ -19,7 +19,6 @@ enum HomeFactory: HomeFactoryProtocol {
         let interactor = HomeInteractor(presenter: presenter, worker: worker)
         let router = HomeRouter(navigationController: navigationController)
         let viewController = HomeViewController(interactor: interactor, router: router)
-        viewController.view = HomeView()
         presenter.homeViewController = viewController
         
         return viewController

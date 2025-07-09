@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 
 protocol HomeViewDelegate: AnyObject {
-    func searchButtonTap(text: String)
     func loadMoreNewsFromInfinityScroll()
 }
 
@@ -55,6 +54,13 @@ class HomeView: UIView {
         newsTableView.dataSource = self
         newsTableView.delegate = self
         return newsTableView
+    }()
+    
+    
+    lazy var spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.startAnimating()
+        return spinner
     }()
     
     // MARK: - Delegate
@@ -138,11 +144,20 @@ class HomeView: UIView {
     // MARK: - Public methods
     
     func loadArticles(articles: [HomeNews.Article], totalArticles: Int) {
-        self.articles = articles
+        setIsLoading(false)
+        self.articles += articles
         self.totalArticles = totalArticles
         
         DispatchQueue.main.async {
             self.newsTableView.reloadData()
+        }
+    }
+    
+    func setIsLoading(_ loading: Bool) {
+        isLoading = loading
+        
+        if !isLoading {
+            newsTableView.tableFooterView = nil
         }
     }
 }
@@ -166,17 +181,16 @@ extension HomeView: UITableViewDataSource {
         cell.prepare(with: article)
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == articles.count - 5, !isLoading, articles.count != totalArticles {
-//            currentPage+=1
-//            loadGitHub()
-            print("Loading more News...")
-        }
-        
-    }
 }
 
 extension HomeView: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == articles.count - 2, !isLoading, articles.count != totalArticles {
+            setIsLoading(true)
+            newsTableView.tableFooterView = spinner
+            delegate?.loadMoreNewsFromInfinityScroll()
+            debugPrint("Loading more News...")
+        }
+    }
 }
