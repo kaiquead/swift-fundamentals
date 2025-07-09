@@ -10,7 +10,7 @@ on:
 jobs:
   build-and-test:
     name: Build and Test iOS App
-    runs-on: macos-13  # Ou macos-14 para Xcode mais novo
+    runs-on: macos-14
 
     steps:
       - name: Checkout Repository
@@ -20,27 +20,36 @@ jobs:
         run: xcodebuild -version
 
       - name: Resolve Swift Packages
-        working-directory: swift-fundamentals/swift-fundamentals
+        working-directory: swift-fundamentals
         run: xcodebuild -resolvePackageDependencies -project swift-fundamentals.xcodeproj
 
       - name: Build App
-        working-directory: swift-fundamentals/swift-fundamentals
+        working-directory: swift-fundamentals
         run: |
           xcodebuild \
             -project swift-fundamentals.xcodeproj \
             -scheme swift-fundamentals \
             -sdk iphonesimulator \
-            -destination "platform=iOS Simulator,name=iPhone 15,OS=17.4" \
+            -destination "platform=iOS Simulator,name=iPhone 15,OS=latest" \
             clean build \
             CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
       - name: Run Unit Tests
-        working-directory: swift-fundamentals/swift-fundamentals
+        working-directory: swift-fundamentals
         run: |
           xcodebuild \
             -project swift-fundamentals.xcodeproj \
             -scheme swift-fundamentals \
             -sdk iphonesimulator \
-            -destination "platform=iOS Simulator,name=iPhone 15,OS=17.4" \
+            -destination "platform=iOS Simulator,name=iPhone 15,OS=latest" \
             test \
-            CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+            CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO \
+            -resultBundlePath TestResults.xcresult
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: swift-fundamentals/TestResults.xcresult
+          retention-days: 30
