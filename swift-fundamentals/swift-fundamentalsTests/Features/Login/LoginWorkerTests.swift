@@ -14,10 +14,10 @@ class LoginWorkerTests: XCTestCase {
     // MARK: - Methods
     
     func testMakeLoginSuccess() {
-        let firebaseAuthServiceStub = FirebaseAuthService.Stub()
-        firebaseAuthServiceStub.shouldSucceed = true
+        let firebaseAuthServiceSpy = FirebaseAuthService.Spy()
+        firebaseAuthServiceSpy.shouldSucceed = true
         
-        let worker = LoginWorker.mock(firebaseAuthService: firebaseAuthServiceStub)
+        let worker = LoginWorker.mock(firebaseAuthService: firebaseAuthServiceSpy)
         
         worker.makeLoginRequest(email: "", password: "") { result in
             switch result {
@@ -31,10 +31,10 @@ class LoginWorkerTests: XCTestCase {
     }
     
     func testMakeLoginFailed() {
-        let firebaseAuthServiceStub = FirebaseAuthService.Stub()
-        firebaseAuthServiceStub.shouldSucceed = false
+        let firebaseAuthServiceSpy = FirebaseAuthService.Spy()
+        firebaseAuthServiceSpy.shouldSucceed = false
         
-        let worker = LoginWorker.mock(firebaseAuthService: firebaseAuthServiceStub)
+        let worker = LoginWorker.mock(firebaseAuthService: firebaseAuthServiceSpy)
         
         worker.makeLoginRequest(email: "", password: "") { result in
             switch result {
@@ -52,14 +52,14 @@ class LoginWorkerTests: XCTestCase {
 
 extension LoginWorker {
     
-    static func mock(firebaseAuthService: FirebaseAuthServiceProtocol = FirebaseAuthService.Stub()) -> LoginWorker {
+    static func mock(firebaseAuthService: FirebaseAuthServiceProtocol = FirebaseAuthService.Spy()) -> LoginWorker {
         .init(firebaseAuthService: firebaseAuthService)
     }
 }
 
 extension LoginWorker {
     
-    class Stub: LoginWorkerProtocol {
+    class Spy: LoginWorkerProtocol {
         let expectedResult: LoginWorker.MakeLoginResult
         var makeLoginRequestCalled = false
         var emailValue = ""

@@ -15,22 +15,22 @@ class LoginPresenterTests: XCTestCase {
     
     func testShowApiError() {
         var presenter = LoginPresenter.mock()
-        let loginViewControllerStub = LoginViewController.OutputStub()
-        presenter.loginViewController = loginViewControllerStub
+        let loginViewControllerSpy = LoginViewController.OutputSpy()
+        presenter.loginViewController = loginViewControllerSpy
         
         presenter.showApiError()
         
-        XCTAssert(loginViewControllerStub.showApiErrorCalled)
+        XCTAssert(loginViewControllerSpy.showApiErrorCalled)
     }
     
     func testLoginSuccessful() {
         var presenter = LoginPresenter.mock()
-        let loginViewControllerStub = LoginViewController.OutputStub()
-        presenter.loginViewController = loginViewControllerStub
+        let loginViewControllerSpy = LoginViewController.OutputSpy()
+        presenter.loginViewController = loginViewControllerSpy
         
         presenter.loginSuccessful()
         
-        XCTAssert(loginViewControllerStub.loginSuccessfulCalled)
+        XCTAssert(loginViewControllerSpy.loginSuccessfulCalled)
     }
 }
 
@@ -43,11 +43,11 @@ extension LoginPresenterProtocol {
     }
 }
 
-// MARK: - Stub
+// MARK: - Spy
 
 extension LoginPresenter {
     
-    class Stub: LoginPresenterProtocol {
+    class Spy: LoginPresenterProtocol {
         var loginViewController: (LoginViewControllerOutputProtocol)?
         
         var showApiErrorCalled = false

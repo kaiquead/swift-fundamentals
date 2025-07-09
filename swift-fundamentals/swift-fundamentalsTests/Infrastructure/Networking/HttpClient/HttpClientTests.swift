@@ -149,23 +149,23 @@ extension HttpClient {
     }
 }
 
-// MARK: - Stub
+// MARK: - Spy
 
 extension HttpClient {
     
-    class Stub: HttpClientProtocol {
-        var stubResult: Result<Data, HttpClient.RequestError>
+    class Spy: HttpClientProtocol {
+        var SpyResult: Result<Data, HttpClient.RequestError>
         var makeRequestCalled = false
         var requestConfiguration: HttpClient.RequestConfiguration?
         
-        init(stubResult: Result<Data, HttpClient.RequestError> = .failure(.dataError)) {
-            self.stubResult = stubResult
+        init(SpyResult: Result<Data, HttpClient.RequestError> = .failure(.dataError)) {
+            self.SpyResult = SpyResult
         }
         
         func makeRequest(requestConfiguration: HttpClient.RequestConfiguration, completion: @escaping (Result<Data, HttpClient.RequestError>) -> Void) {
             self.makeRequestCalled = true
             self.requestConfiguration = requestConfiguration
-            completion(stubResult)
+            completion(SpyResult)
         }
     }
 }

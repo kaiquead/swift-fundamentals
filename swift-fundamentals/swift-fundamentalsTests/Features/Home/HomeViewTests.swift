@@ -33,18 +33,3 @@ final class HomeViewTests: XCTestCase {
         assertSnapshot(of: vc, as: .image(on: config), record: false)
     }
 }
-
-
-
-
-//func testHomeViewSnapshot() {
-//    let view = HomeView()
-//    view.loadArticles(articles: [.mock(title: "Teste", description: "Teste", publishedAt: "2025-07-07T18:26:26Z")], totalArticles: 1)
-//    
-//    view.snp.makeConstraints { make in
-//        make.width.equalTo(375)
-//        make.height.equalTo(667)
-//    }
-//
-//    assertSnapshot(of: view, as: .image, record: false)
-//}

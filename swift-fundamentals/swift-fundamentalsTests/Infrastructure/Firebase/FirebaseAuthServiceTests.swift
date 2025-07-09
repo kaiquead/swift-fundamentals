@@ -11,7 +11,7 @@ import Foundation
 
 extension FirebaseAuthService {
     
-    class Stub: FirebaseAuthServiceProtocol {
+    class Spy: FirebaseAuthServiceProtocol {
         var shouldSucceed = true
 
         func signIn(email: String, password: String, completion: @escaping (Result<User?, Error>) -> Void) {

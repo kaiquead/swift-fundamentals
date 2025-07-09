@@ -16,8 +16,8 @@ class HomeInteractorTests: XCTestCase {
     func testLoadHomeNewsWithSuccessResult() {
         let news = HomeNews.mock()
         let expectedResult: HomeWorker.MakeInitialNewsResult = .success(news)
-        let presenter = HomePresenter.Stub()
-        let worker = HomeWorker.Stub(expectedResult: expectedResult)
+        let presenter = HomePresenter.Spy()
+        let worker = HomeWorker.Spy(expectedResult: expectedResult)
         let interactor = HomeInteractor.mock(presenter: presenter, worker: worker)
         
         interactor.loadHomeNews(isFirstPage: true)
@@ -34,8 +34,8 @@ class HomeInteractorTests: XCTestCase {
     
     func testLoadHomeNewsWithFailureResult() {
         let expectedResult: HomeWorker.MakeInitialNewsResult = .failure(.networkError)
-        let presenter = HomePresenter.Stub()
-        let worker = HomeWorker.Stub(expectedResult: expectedResult)
+        let presenter = HomePresenter.Spy()
+        let worker = HomeWorker.Spy(expectedResult: expectedResult)
         let interactor = HomeInteractor.mock(presenter: presenter, worker: worker)
         
         interactor.loadHomeNews(isFirstPage: true)
@@ -48,16 +48,16 @@ class HomeInteractorTests: XCTestCase {
 
 extension HomeInteractor {
     
-    static func mock(presenter: HomePresenterProtocol = HomePresenter.Stub(), worker: HomeWorkerProtocol = HomeWorker.Stub(expectedResult: .failure(.networkError))) -> HomeInteractorProcol {
+    static func mock(presenter: HomePresenterProtocol = HomePresenter.Spy(), worker: HomeWorkerProtocol = HomeWorker.Spy(expectedResult: .failure(.networkError))) -> HomeInteractorProcol {
         HomeInteractor(presenter: presenter, worker: worker)
     }
 }
 
-// MARK: - Stub
+// MARK: - Spy
 
 extension HomeInteractor {
     
-    class Stub: HomeInteractorProcol {
+    class Spy: HomeInteractorProcol {
         var expectedResult: HomeWorker.MakeInitialNewsResult
         var loadHomeNewsCalled = false
         var isFirstPage = false

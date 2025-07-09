@@ -9,11 +9,11 @@ import Foundation
 import XCTest
 @testable import swift_fundamentals
 
-// MARK: - Stub
+// MARK: - Spy
 
 extension LoginViewController {
     
-    class OutputStub: LoginViewControllerOutputProtocol {
+    class OutputSpy: LoginViewControllerOutputProtocol {
         var showApiErrorCalled = false
         var loginSuccessfulCalled = false
         

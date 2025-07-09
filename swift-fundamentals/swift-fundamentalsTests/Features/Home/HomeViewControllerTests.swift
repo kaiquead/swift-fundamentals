@@ -9,11 +9,11 @@ import Foundation
 import XCTest
 @testable import swift_fundamentals
 
-// MARK: - Stub
+// MARK: - Spy
 
 extension HomeViewController {
     
-    class OutputStub: HomeViewControllerOutputProtocol {
+    class OutputSpy: HomeViewControllerOutputProtocol {
         var loadNewsOnScreenCalled = false
         var newsValue: HomeNews?
         

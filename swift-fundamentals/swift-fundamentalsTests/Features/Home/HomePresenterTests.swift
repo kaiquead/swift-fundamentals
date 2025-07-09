@@ -15,24 +15,24 @@ class HomePresenterTests: XCTestCase {
     
     func testLoadNewsOnScreen() {
         var presenter = HomePresenter.mock()
-        let homeViewControllerStub = HomeViewController.OutputStub()
-        presenter.homeViewController = homeViewControllerStub
+        let homeViewControllerSpy = HomeViewController.OutputSpy()
+        presenter.homeViewController = homeViewControllerSpy
         let news = HomeNews.mock()
         
         presenter.loadNewsOnScreen(news: news)
         
-        XCTAssert(homeViewControllerStub.loadNewsOnScreenCalled)
-        XCTAssert(homeViewControllerStub.newsValue == news)
+        XCTAssert(homeViewControllerSpy.loadNewsOnScreenCalled)
+        XCTAssert(homeViewControllerSpy.newsValue == news)
     }
     
     func testShowApiError() {
         var presenter = HomePresenter.mock()
-        let homeViewControllerStub = HomeViewController.OutputStub()
-        presenter.homeViewController = homeViewControllerStub
+        let homeViewControllerSpy = HomeViewController.OutputSpy()
+        presenter.homeViewController = homeViewControllerSpy
         
         presenter.showApiError()
         
-        XCTAssert(homeViewControllerStub.showApiErrorCalled)
+        XCTAssert(homeViewControllerSpy.showApiErrorCalled)
     }
 }
 
@@ -47,7 +47,7 @@ extension HomePresenterProtocol {
 
 extension HomePresenter {
     
-    class Stub: HomePresenterProtocol {
+    class Spy: HomePresenterProtocol {
         var homeViewController: (HomeViewControllerOutputProtocol)?
         
         var loadNewsOnScreenCalled = false
