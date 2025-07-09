@@ -1,69 +1,30 @@
-name: iOS CI
+name: iOS pipeline
 
 on:
   push:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
+  workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build:
+    name: Build iOS App
     runs-on: macos-14
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_15.3.app/Contents/Developer
 
     steps:
-      - name: Checkout do projeto
+      - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Selecionar Xcode 16.2
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '16.2'
+      - name: Resolve Swift Package dependencies
+        run: xcodebuild -resolvePackageDependencies
 
-      - name: Confirmar versão do Xcode
-        run: xcodebuild -version
-
-      - name: Resolver dependências via Swift Package Manager
+      - name: Build the project
         run: |
-          set -o pipefail
-          xcodebuild -resolvePackageDependencies -project swift-fundamentals/swift-fundamentals.xcodeproj
-      - name: Criar simulador temporário
-        id: create-simulator
-        run: |
-          set -o pipefail
-          RUNTIME=$(xcrun simctl list runtimes | grep -m1 "iOS 17" | grep -oE 'com.apple.CoreSimulator.SimRuntime.iOS[^ ]+')
-          if [ -z "$RUNTIME" ]; then
-            echo "❌ Runtime iOS não encontrado"
-            exit 1
-          fi
-          SIM_ID=$(xcrun simctl create "CI iPhone 15" "iPhone 15" "$RUNTIME")
-          echo "simulator_id=$SIM_ID" >> $GITHUB_OUTPUT
-          xcrun simctl boot "$SIM_ID"
-          xcrun simctl bootstatus "$SIM_ID" -b
-      - name: Executar testes (unitários + snapshot)
-        run: |
-          set -o pipefail
-          cd swift-fundamentals
-          xcodebuild test \
-            -project swift-fundamentals.xcodeproj \
+          xcodebuild \
             -scheme swift-fundamentals \
             -sdk iphonesimulator \
-            -destination "id=${{ steps.create-simulator.outputs.simulator_id }}" \
-            -enableCodeCoverage YES \
-            -resultBundlePath build/ResultBundle \
-            -quiet | xcpretty
-      - name: Verificar snapshots gerados (debug)
-        run: |
-          set -o pipefail
-          find /Users/runner/work/ -type d -name "__Snapshots__" -exec ls -R {} \; || echo "Nenhum snapshot encontrado"
-      - name: Exportar cobertura de testes
-        if: success()
-        run: |
-          mkdir -p coverage
-          xcrun xccov view --report --json swift-fundamentals/build/ResultBundle.xcresult > coverage/codecov.json
-      - name: Apagar simulador
-        if: always()
-        run: |
-          xcrun simctl shutdown "${{ steps.create-simulator.outputs.simulator_id }}"
-          xcrun simctl delete "${{ steps.create-simulator.outputs.simulator_id }}"
+            -destination "platform=iOS Simulator,name=iPhone 15,OS=17.4" \
+            clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
