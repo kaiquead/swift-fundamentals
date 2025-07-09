@@ -43,7 +43,7 @@ jobs:
             -project swift-fundamentals.xcodeproj \
             -scheme swift-fundamentals \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2' \
+            -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.0' \
             -enableCodeCoverage YES \
             -resultBundlePath build/ResultBundle \
             -quiet | xcpretty
