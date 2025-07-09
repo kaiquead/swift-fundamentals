@@ -18,11 +18,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Resolve Swift Package dependencies
-        working-directory: swift-fundamentals
-        run: |
-          xcodebuild -resolvePackageDependencies -project swift-fundamentals.xcodeproj
-
       - name: Build the project
         working-directory: swift-fundamentals/swift-fundamentals
         run: |
