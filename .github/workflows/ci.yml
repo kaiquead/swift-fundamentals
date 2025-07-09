@@ -16,10 +16,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Chose Xcode 16.3
+      - name: Chose Xcode 16.2
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '16.3'
+          xcode-version: '16.2'
 
       - name: Confirm Xcode version
         run: xcodebuild -version
