@@ -19,6 +19,7 @@ jobs:
 
       - name: Build and tests with xcodebuild including SnapshotTests
         run: |
+          cd swift-fundamentals/swift-fundamentals
           xcodebuild test \
             -project swift-fundamentals.xcodeproj \
             -scheme swift-fundamentals \
