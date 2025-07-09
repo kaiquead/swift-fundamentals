@@ -1,4 +1,4 @@
-name: iOS Build
+name: iOS CI
 
 on:
   push:
@@ -8,22 +8,45 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build iOS App
-    runs-on: macos-14
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_15.3.app/Contents/Developer
+  build-and-test:
+    name: Build and Test iOS App
+    runs-on: macos-13
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Build the project
-        working-directory: swift-fundamentals
+      - name: Select Xcode Version
+        run: |
+          sudo xcode-select -s /Applications/Xcode_15.3.app
+          xcodebuild -version
+
+      - name: Navigate to Project Directory
+        working-directory: swift-fundamentals/swift-fundamentals
+        run: echo "Entered project directory"
+
+      - name: Resolve Swift Packages
+        working-directory: swift-fundamentals/swift-fundamentals
+        run: xcodebuild -resolvePackageDependencies -project swift-fundamentals.xcodeproj
+
+      - name: Build App
+        working-directory: swift-fundamentals/swift-fundamentals
         run: |
           xcodebuild \
+            -project swift-fundamentals.xcodeproj \
             -scheme swift-fundamentals \
             -sdk iphonesimulator \
             -destination "platform=iOS Simulator,name=iPhone 15,OS=17.4" \
             clean build \
+            CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+      - name: Run Unit Tests
+        working-directory: swift-fundamentals/swift-fundamentals
+        run: |
+          xcodebuild \
+            -project swift-fundamentals.xcodeproj \
+            -scheme swift-fundamentals \
+            -sdk iphonesimulator \
+            -destination "platform=iOS Simulator,name=iPhone 15,OS=17.4" \
+            test \
             CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
