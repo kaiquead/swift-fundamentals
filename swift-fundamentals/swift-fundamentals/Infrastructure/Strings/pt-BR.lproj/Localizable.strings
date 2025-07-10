@@ -22,3 +22,7 @@
 "apiErrorTitle" = "Estamos enfrentando um problema no servidor";
 "apiErrorDescription" = "Tente novamente mais tarde";
 "apiErrorOk" = "Ok";
+
+// MARK: - Article Detail
+
+"articleDetailTitle" = "Artigo";

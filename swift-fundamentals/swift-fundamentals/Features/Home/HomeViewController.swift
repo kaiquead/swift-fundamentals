@@ -68,6 +68,10 @@ extension HomeViewController: HomeViewControllerInputProtocol, HomeViewDelegate,
             view.setIsLoading(false)
         }
     }
+    
+    func selectedArticle(article: HomeNews.Article) {
+        router.goToArticleDetail(article: article)
+    }
 }
 
 // MARK: - Outputs

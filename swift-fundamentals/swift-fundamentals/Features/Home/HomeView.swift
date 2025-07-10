@@ -11,6 +11,7 @@ import SnapKit
 
 protocol HomeViewDelegate: AnyObject {
     func loadMoreNewsFromInfinityScroll()
+    func selectedArticle(article: HomeNews.Article)
 }
 
 class HomeView: UIView {
@@ -180,6 +181,11 @@ extension HomeView: UITableViewDataSource {
         let article = articles[indexPath.row]
         cell.prepare(with: article)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selected = articles[indexPath.row]
+        delegate?.selectedArticle(article: selected)
     }
 }
 

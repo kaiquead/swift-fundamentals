@@ -57,6 +57,12 @@ enum StringLocalizer {
         self.localizeString("apiErrorOk")
     }
     
+    // MARK: - ArticleDetail
+    
+    static var articleDetailTitle: String {
+        self.localizeString("articleDetailTitle")
+    }
+    
     // MARK: - Localizer
     
     static func localizeString(_ key: String) -> String {
