@@ -6,9 +6,23 @@
   
 */
 
+// MARK: - Login
+
+"loginTitle" = "Daily News";
+"emailPlaceholder" = "Type your e-mail";
+"passwordPlaceholder" = "Type your password";
+"loginButtonTitle" = "Login";
+
 // MARK: - Home
 
-"homeTitle" = "Notícias Diárias";
-"searchTitle" = "Procurar";
-"newsTitle" = "Notícias";
-"helloLabel" = "Olá, %@";
+"homeTitle" = "Daily News";
+"searchTitle" = "Search";
+"newsTitle" = "News";
+"helloLabel" = "Hello, %@";
+"apiErrorTitle" = "We are experiencing a server issue";
+"apiErrorDescription" = "Try again later";
+"apiErrorOk" = "Ok";
+
+// MARK: - Article Detail
+
+"articleDetailTitle" = "Article";
