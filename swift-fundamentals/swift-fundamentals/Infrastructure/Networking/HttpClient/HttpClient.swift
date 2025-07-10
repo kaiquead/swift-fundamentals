@@ -16,6 +16,8 @@ protocol HttpClientProtocol {
 
 class HttpClient: HttpClientProtocol {
     
+    // MARK: - Initialization
+    
     let session: URLSession
     
     init(session: URLSession = .shared) {
