@@ -16,6 +16,14 @@ class HttpClientTests: XCTestCase {
     
     let httpClient = HttpClient.mock()
     
+    // MARK: - Tear down
+    
+    override class func tearDown() {
+        super.tearDown()
+        
+        URLProtocolMock.requestHandler = nil
+    }
+    
     // MARK: - Tests
     
     func testInvalidURL() {
