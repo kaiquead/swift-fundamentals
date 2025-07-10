@@ -27,28 +27,6 @@ class HomeView: UIView {
         return titleLabel
     }()
     
-    lazy var searchButton: UIButton = {
-        let searchButton = UIButton()
-        searchButton.setTitle(StringLocalizer.searchTitle, for: .normal)
-        searchButton.backgroundColor = Colors.homeRed
-        searchButton.layer.cornerRadius = 12
-        searchButton.layer.masksToBounds = true
-        searchButton.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
-        return searchButton
-    }()
-    
-    lazy var searchTextField: UITextField = {
-        let searchTextField = UITextField()
-        searchTextField.placeholder = StringLocalizer.searchTitle
-        searchTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
-        searchTextField.leftViewMode = .always
-        searchTextField.backgroundColor = .white
-        searchTextField.layer.cornerRadius = 12
-        searchTextField.layer.masksToBounds = true
-        searchTextField.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
-        return searchTextField
-    }()
-    
     lazy var newsTableView: UITableView = {
         let newsTableView = UITableView()
         newsTableView.register(NewsTableViewCell.self, forCellReuseIdentifier: NewsTableViewCell.reuseIdentifier)
@@ -100,8 +78,6 @@ class HomeView: UIView {
         backgroundColor = Colors.homeBackground
         
         configureTitleLabel()
-        configureSearchButton()
-        configureSearchTextField()
         configureNewsTableView()
     }
     
@@ -113,30 +89,10 @@ class HomeView: UIView {
         }
     }
     
-    private func configureSearchButton() {
-        addSubview(searchButton)
-        searchButton.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(24)
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(100)
-            make.height.equalTo(44)
-        }
-    }
-    
-    private func configureSearchTextField() {
-        addSubview(searchTextField)
-        searchTextField.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(24)
-            make.leading.equalToSuperview().inset(16)
-            make.trailing.equalTo(searchButton.snp.leading)
-            make.height.equalTo(44)
-        }
-    }
-    
     private func configureNewsTableView() {
         addSubview(newsTableView)
         newsTableView.snp.makeConstraints { make in
-            make.top.equalTo(searchTextField.snp.bottom).offset(16)
+            make.top.equalTo(titleLabel.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
