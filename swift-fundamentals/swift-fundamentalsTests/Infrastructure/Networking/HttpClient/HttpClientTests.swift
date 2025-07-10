@@ -162,18 +162,18 @@ extension HttpClient {
 extension HttpClient {
     
     class Spy: HttpClientProtocol {
-        var SpyResult: Result<Data, HttpClient.RequestError>
+        var spyResult: Result<Data, HttpClient.RequestError>
         var makeRequestCalled = false
         var requestConfiguration: HttpClient.RequestConfiguration?
         
-        init(SpyResult: Result<Data, HttpClient.RequestError> = .failure(.dataError)) {
-            self.SpyResult = SpyResult
+        init(spyResult: Result<Data, HttpClient.RequestError> = .failure(.dataError)) {
+            self.spyResult = spyResult
         }
         
         func makeRequest(requestConfiguration: HttpClient.RequestConfiguration, completion: @escaping (Result<Data, HttpClient.RequestError>) -> Void) {
             self.makeRequestCalled = true
             self.requestConfiguration = requestConfiguration
-            completion(SpyResult)
+            completion(spyResult)
         }
     }
 }

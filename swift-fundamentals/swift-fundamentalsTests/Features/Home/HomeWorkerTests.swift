@@ -35,7 +35,7 @@ class HomeWorkerTests: XCTestCase {
     func testMakeInitialNewsRequestWithSuccessInHttpAndFailureInDecode() {
         let genericData = Data()
         let httpClientSpyResult: Result<Data, HttpClient.RequestError> = .success(genericData)
-        let httpClientSpy = HttpClient.Spy(SpyResult: httpClientSpyResult)
+        let httpClientSpy = HttpClient.Spy(spyResult: httpClientSpyResult)
         
         let worker = HomeWorker.mock(httpClient: httpClientSpy)
         let page = 1
@@ -59,7 +59,7 @@ class HomeWorkerTests: XCTestCase {
         }
         
         let httpClientSpyResult: Result<Data, HttpClient.RequestError> = .success(httpClientSuccessData)
-        let httpClientSpy = HttpClient.Spy(SpyResult: httpClientSpyResult)
+        let httpClientSpy = HttpClient.Spy(spyResult: httpClientSpyResult)
         
         let worker = HomeWorker.mock(httpClient: httpClientSpy)
         let page = 1
@@ -78,7 +78,7 @@ class HomeWorkerTests: XCTestCase {
     
     func testMakeInitialNewsRequestFailInHttp() {
         let httpClientSpyResult: Result<Data, HttpClient.RequestError> = .failure(.apiError(statusCode: 404))
-        let httpClientSpy = HttpClient.Spy(SpyResult: httpClientSpyResult)
+        let httpClientSpy = HttpClient.Spy(spyResult: httpClientSpyResult)
         
         let worker = HomeWorker.mock(httpClient: httpClientSpy)
         let page = 1
